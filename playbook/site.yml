@@ -1,0 +1,31 @@
+- hosts: vagrants
+  become: yes
+  remote_user: root
+  gather_facts: no
+  tasks:
+    - name: install nginx
+      apt: name=nginx update_cache=yes
+
+    - name: install packages php-fpm 
+      apt: name=php-fpm update_cache=yes
+
+    - name: add default setting for nginx
+      template: 
+        src: default
+        dest: /etc/nginx/sites-available/default
+
+    - name: add default setting for php-fpm
+      template:
+        src: php.ini
+        dest: /etc/php/7.0/fpm/php.ini
+    
+    - name: add info.php
+      template:
+        src: info.php
+        dest: /var/www/html/info.php
+    
+    - name: reload nginx
+      command: service nginx reload
+    
+    - name: restart php7.0-fpm
+      command: service php7.0-fpm reload
