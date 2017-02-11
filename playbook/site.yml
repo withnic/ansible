@@ -1,6 +1,6 @@
 - hosts: vagrants
   become: yes
-  remote_user: root
+  remote_user: ubuntu
   gather_facts: no
   tasks:
     - name: install nginx
